@@ -1,5 +1,5 @@
 
-function checkForm() {
+function checkRegisterForm() {
 
     if (!validUsername()) {
         document.reg.username.focus();
@@ -26,6 +26,7 @@ function checkForm() {
 }
 
 function validUsername() {
+    
     var username = document.reg.username.value;
     if (username.length < 4) {
         alert("Username must be at least 4 characters long!");
@@ -33,13 +34,14 @@ function validUsername() {
         return false;
     }
     if (/[^a-zA-Z0-9]/.test(username)) {
-        alert("Username must be alphanumeric");
+        alert("Username must be alphanumeric!");
         return false;
     }
     return true;
 }
 
 function validGender() {
+    
     if (document.reg.gender.selectedIndex === 0) {
         alert("You must select a gender!");
         return false;
@@ -47,7 +49,8 @@ function validGender() {
     return true;
 }
 
-function validEmail() {
+function matchingMails() {
+
     var email = document.reg.email.value;
     var cemail = document.reg.cemail.value;
     if (email !== cemail) {
@@ -58,6 +61,7 @@ function validEmail() {
 }
 
 function validPassword() {
+    
     var pw = document.reg.password.value;
     var username = document.reg.username.value;
     if (username == pw) {
@@ -72,6 +76,26 @@ function validPassword() {
     var cpw = document.reg.cpassword.value;
     if (pw != cpw) {
         alert("Passwords don't match!");
+        return false;
+    }
+    return true;
+}
+
+function validEmail() {
+    
+    var email = document.reg.email.value;
+    if (email.lastIndexOf('.') <= email.lastIndexOf('@') + 1) { //dot after @
+        alert("Invalid mail!");
+        return false;
+    }
+    return matchingMails();
+}
+
+function checkLoginForm() {
+    
+    if (!validUsername()) {
+        document.reg.username.focus();
+        document.reg.username.select();
         return false;
     }
     return true;

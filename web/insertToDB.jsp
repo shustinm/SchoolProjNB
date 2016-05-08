@@ -6,71 +6,93 @@
 <%@page import="java.sql.Connection"%>
 <%@page import="java.util.Base64.*"%>
 
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<%
 
-    //field values retrieval from server to client
-    String username = request.getParameter("username");
-    String gender = request.getParameter("gender");
-    String email = request.getParameter("email");
-    Encoder encoder = Base64.getEncoder();
-    String password = encoder.encodeToString(request.getParameter("password").getBytes());
-    int age = Integer.parseInt(request.getParameter("age"));
-
-    //connecting to database
-    Connection con = MyUtils.getSiteDBconnection(application, "db\\siteDB.mdb");
-    Statement stmt = con.createStatement();
-
-    //check if the un exists
-    String sql = "SELECT * FROM users WHERE username='" + username + "'";
-    ResultSet rs = stmt.executeQuery(sql);
-    if (rs.next()) {
-        out.print("<center><h3>Registration unsuccessful</h3></center><br>");
-        out.print("<center><h3>User already exists</h3></center>");
-    } else {
-        sql = "INSERT INTO users(username, gender, email, password, age) VALUES('"
-                + username + "','" + gender + "','" + email + "','" + password + "','" + age + "')";
-        stmt.executeUpdate(sql);
-        out.print("<center><h4>(" + username + "','" + gender + "','" + email + "','" + password + "','" + age + "')</h4></center>");
-        out.print("<center><h3>Registration successful</h3></center><br>");
-    }
-    //end db connection
-    stmt.close();
-    con.close();
-
-%>
 
 <html>
     <head>
         <title>Registration</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/cover.css">
+        <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container" style="width:100%">
-                <a href="index.html"><b class="navbar-brand"><img src="pics/program.png" width="20" alt="Musix"></b>
-                <b class="navbar-brand">Musix</b></a>
+                <a href="index.jsp"><b class="navbar-brand"><img src="pics/program.png" width="20" alt="Musix"></b>
+                    <b class="navbar-brand">Musix</b></a>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="index.html">Home</a></li>
-                        <li><a href="SignUp.html">Sign Up</a></li>
+                        <li><a href="index.jsp">Home</a></li>
+                        <li class="active"><a href="SignUp.jsp">Sign Up</a></li>
+                        <li><a href="login.jsp"></a></li>
                     </ul>
                 </div>
             </div>
         </nav>
 
-        <div class="site-wrapper">
+
+
+
+        <div class="site-wrapper a">
             <div class="site-wrapper-inner">
                 <div class="inner cover midtext lead">
-                    <h1>Welcome to Musix.</h1>
-                    <p>Musix brings your favorite music, straight from YouTube.<br>Start your journey now!</p>
-                    <p>
-                        <a href="SignUp.html" class="btn btn-lg btn-default">Sign up</a>
-                    </p>
+                    <%
+                        //field values retrieval from server to client
+                        String username = request.getParameter("username");
+
+                        //connecting to database
+                        Connection con = MyUtils.getSiteDBconnection(application, "db\\siteDB.mdb");
+                        Statement stmt = con.createStatement();
+
+                        String sql = "SELECT * FROM users WHERE username='" + username + "'";
+                        ResultSet rs = stmt.executeQuery(sql);
+                        if (rs.next()) { //check if the un exists
+                            out.print("<h1>Registration unsuccessful</h1><br>");
+                            out.print("<h2>User already exists</h2>");
+                            out.print("<br><a href=\"SignUp.jsp\" class=\"btn btn-lg btn-default\">Sign up</a>");
+                        } else { //doesn't exist
+
+                            String gender = request.getParameter("gender");
+                            String email = request.getParameter("email");
+                            Encoder encoder = Base64.getEncoder();
+                            String password = encoder.encodeToString(request.getParameter("password").getBytes());
+                            int age = Integer.parseInt(request.getParameter("age"));
+                            String[] genres = new String[]{
+                                request.getParameter("rock"),
+                                request.getParameter("rnb"),
+                                request.getParameter("pop"),
+                                request.getParameter("rap"),
+                                request.getParameter("electronic"),
+                                request.getParameter("classic"),
+                                request.getParameter("jazz"),
+                            };
+                            String genreStr = "";
+                            for (int i = 0; i < genres.length; i++) {
+                                if(i != 0)
+                                    genreStr += "','";
+                                if(genres[i] != null){
+                                    genreStr += genres[i]; 
+                                    continue;
+                                }
+                                genreStr += "0";
+                                
+                            }
+                            sql = "INSERT INTO users(username, gender, email, password, age, rock, rnb, pop, rap, electronic, classic, jazz) "
+                                    + "VALUES('" + username + "','" + gender + "','" + email + "','" + password + "','" + age + "','" + genreStr + "')";
+                            stmt.executeUpdate(sql);
+                            out.print("<h1>Registration successful</h1><br>");
+                            out.print("<h2>Your username is " + username + "</h2><br>");
+                        }
+
+                        //end db connection
+                        stmt.close();
+                        con.close();
+                        
+                        session.setAttribute("username", username);
+                    %>
                 </div>
             </div>
         </div>
