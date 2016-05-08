@@ -47,8 +47,4 @@
 
         <nav class="navbar navbar-default navbar-fixed-bottom">
             <div class="container" style="width:100%">
-                <p style="padding-top: 5px">Musix<br>© 2016 Michael Shustin<br>CS Project</p>
-            </div>
-        </nav>
-    </body>
-</html>
+                <p style="padding-top: 5px">Musix<br>

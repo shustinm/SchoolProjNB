@@ -1,10 +1,10 @@
 
 <%@page import="java.util.Base64"%>
+<%@page import="java.util.Base64.*"%>
 <%@page import="MyClasses.MyUtils"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
-<%@page import="java.util.Base64.*"%>
 
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

@@ -1,22 +1,26 @@
 
-<%@page import="javax.enterprise.context.SessionScoped"%>
 <%@page import="java.util.Base64"%>
+<%@page import="java.util.Base64.*"%>
 <%@page import="MyClasses.MyUtils"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
-<%@page import="java.util.Base64.*"%>
 
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
+        <title>Login</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <%
+            if (session.getAttribute("username") != null) {
+                response.sendRedirect("listen.jsp");
+            }
+        %>
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/style.css">
         <script src="js/validation.js"></script>
-        <title>Login</title>
     </head>
     <body>
         <nav class="navbar navbar-default navbar-fixed-top">
@@ -49,6 +53,34 @@
                 </div>
             </form>
         </div>
+
+        <%
+            String username = request.getParameter("username");
+            if (username != null) {
+
+                //connecting to database
+                Connection con = MyUtils.getSiteDBconnection(application, "db\\siteDB.mdb");
+                Statement stmt = con.createStatement();
+
+                //field values retrieval from server to client
+                Encoder encoder = Base64.getEncoder();
+                String password = encoder.encodeToString(request.getParameter("password").getBytes());
+
+                String sql = "SELECT * FROM users WHERE username='" + username + "'";
+                ResultSet rs = stmt.executeQuery(sql);
+                rs.next();
+
+                if (password == rs.getString("password")) {
+                    session.setAttribute("username", username);
+                }
+
+                stmt.close();
+                con.close();
+                
+                session.setAttribute("username", username);
+                response.sendRedirect("listen.jsp");
+            }
+        %>
 
         <nav class="navbar navbar-default navbar-fixed-bottom">
             <div class="container" style="width:100%">
