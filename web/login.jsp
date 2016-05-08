@@ -13,11 +13,6 @@
     <head>
         <title>Login</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <%
-            if (session.getAttribute("username") != null) {
-                response.sendRedirect("listen.jsp");
-            }
-        %>
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/style.css">
         <script src="js/validation.js"></script>
@@ -55,6 +50,10 @@
         </div>
 
         <%
+            if (session.getAttribute("username") != null) {
+                response.sendRedirect("listen.jsp");
+            }
+
             String username = request.getParameter("username");
             if (username != null) {
 
@@ -68,17 +67,16 @@
 
                 String sql = "SELECT * FROM users WHERE username='" + username + "'";
                 ResultSet rs = stmt.executeQuery(sql);
-                rs.next();
 
-                if (password == rs.getString("password")) {
-                    session.setAttribute("username", username);
+                if (rs.next()) {
+                    if (password.equals(rs.getString("password"))) {
+                        session.setAttribute("username", username);
+                        response.sendRedirect("listen.jsp");
+                    }
                 }
 
                 stmt.close();
                 con.close();
-                
-                session.setAttribute("username", username);
-                response.sendRedirect("listen.jsp");
             }
         %>
 

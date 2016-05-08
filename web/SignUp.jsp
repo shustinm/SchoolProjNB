@@ -15,13 +15,23 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="index.jsp">Home</a></li>
+                            <% if (session.getAttribute("username") == null) { %>
                         <li class="active"><a href="SignUp.jsp">Sign Up</a></li>
+                            <% } else {
+                                //response.sendRedirect("profile.jsp"); 
+                            %>
+                        <li class="active"><a href="SignUp.jsp"><%out.print(session.getAttribute("username"));%></a></li>
+                            <% }
+                                if (session.getAttribute("username") == null) { %>
                         <li><a href="login.jsp">Login</a></li>
+                            <% } else { %>
+                        <li><a href="listen.jsp">Listen</a></li>
+                            <% }%>
                     </ul>
                 </div>
             </div>
         </nav>
-        
+
         <div class="a">
             <h1>Registration</h1>
             <h2>Enter your details below</h2>
@@ -75,10 +85,10 @@
                     </label>
                 </div>
                 -->
-                
+
                 <div class="form-group">
-                <button type="submit" class="btn btn-primary">Sign up</button>
-                <button type="reset" class="btn btn-default">Reset</button>
+                    <button type="submit" class="btn btn-primary">Sign up</button>
+                    <button type="reset" class="btn btn-default">Reset</button>
                 </div>
             </form>
         </div>

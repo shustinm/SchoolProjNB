@@ -16,7 +16,7 @@
         <title>Registration</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/cover.css">
     </head>
     <body>
         <nav class="navbar navbar-default navbar-fixed-top">
@@ -26,8 +26,16 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="index.jsp">Home</a></li>
+                            <% if (session.getAttribute("username") == null) { %>
                         <li class="active"><a href="SignUp.jsp">Sign Up</a></li>
-                        <li><a href="login.jsp"></a></li>
+                            <% } else { %>
+                        <li class="active"><a href="SignUp.jsp"><%out.print(session.getAttribute("username"));%></a></li>
+                            <% }
+                                if (session.getAttribute("username") == null) { %>
+                        <li><a href="login.jsp">Login</a></li>
+                            <% } else { %>
+                        <li><a href="listen.jsp">Listen</a></li>
+                            <% }%>
                     </ul>
                 </div>
             </div>
@@ -85,6 +93,7 @@
                             stmt.executeUpdate(sql);
                             out.print("<h1>Registration successful</h1><br>");
                             out.print("<h2>Your username is " + username + "</h2><br>");
+                            out.print("<a href = \"listen.jsp\" class=\"btn btn-lg btn-default\">Listen</a>");
                         }
 
                         //end db connection

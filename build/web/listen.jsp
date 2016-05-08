@@ -25,16 +25,32 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="index.jsp">Home</a></li>
+                            <% if (session.getAttribute("username") == null) { %>
                         <li><a href="SignUp.jsp">Sign Up</a></li>
-                        <li class="active"><a href="login.jsp">Login</a></li>
+                            <% } else { %>
+                        <li><a href="SignUp.jsp"><%out.print(session.getAttribute("username"));%></a></li>
+                            <% }
+                                if (session.getAttribute("username") == null) { %>
+                        <li><a href="login.jsp">Login</a></li>
+                            <% } else { %>
+                        <li class="active"><a href="listen.jsp">Listen</a></li>
+                            <% }%>
                     </ul>
                 </div>
             </div>
         </nav>
 
+        <% if (session.getAttribute("username") == null) {%>
         <div class="a">
-            <h1>Musix</h1>
+            <h1>Error</h1>
+            <h2>You need to log in to listen to music :(</h2>
         </div>
+        <% } else { %>
+        <div class="a">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/u9Dg-g7t2l4?list=PLhd1HyMTk3f5yqcPXjLo8qroWJiMMFBSk" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <% }%>
+
 
 
         <nav class="navbar navbar-default navbar-fixed-bottom">
