@@ -7,7 +7,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/cover.css">
-        <script src="js/validation.js"></script>
         <title>Listen</title>
     </head>
     <body>
@@ -41,27 +40,42 @@
             <h2>Please log in!</h2>
         </div>
         <% } else %>
+        <script>
+            function changeGenre() {
+                var genre = document.getElementById("genre").value;
+                var iframe = document.getElementById("youtube");
+
+                if (genre === "rock")
+                    iframe.setAttribute("src", "https://www.youtube.com/embed/qw5G6fF-wqQ?list=PLOvc47UgH6TBTjfXClorVm5d2zielQL0j");
+                else if (genre === "rnb")
+                    iframe.setAttribute("src", "https://www.youtube.com/embed/lsJLLEwUYZM?list=PLRZlMhcYkA2EQSwaeOeZnJ1nOfpZTsMuS");
+                else if (genre === "pop")
+                    iframe.setAttribute("src", "https://www.youtube.com/embed/nfWlot6h_JM?list=PLMC9KNkIncKvYin_USF1qoJQnIyMAfRxl");
+                else if (genre === "rap")
+                    iframe.setAttribute("src", "https://www.youtube.com/embed/E5ONTXHS2mM?list=PLuUrokoVSxldRtidohE-O-Pv0EPLhO-nX");
+                else if (genre === "electronic")
+                    iframe.setAttribute("src", "https://www.youtube.com/embed/ru0K8uYEZWw?list=PL28A438F42502CC37");
+                else if (genre === "classic")
+                    iframe.setAttribute("src", "https://www.youtube.com/embed/4IRMYuE1hI?list=PL49964BF147354C97");
+                else if (genre === "jazz")
+                    iframe.setAttribute("src", "https://www.youtube.com/embed/RPfFhfSuUZ4?list=PL8F6B0753B2CCA128");
+                else
+                    iframe.setAttribute("src", "https://www.youtube.com/embed/p5RobDomh5U?list=PL55713C70BA91BD6E");
+            }
+        </script>
         <div class="listen-wrapper b">
             <div class="center">
-                <form name="reg" action="changePlaylist.jsp" method="POST">
-                    <select class="form-control" id="genre" onchange="this.form.submit()">
-                        <option>Select Genre</option>
-                        <option value="rock">Rock</option>
-                        <option value="rnb">R&AMP;B</option>
-                        <option value="pop">Pop</option>
-                        <option value="rap">Rap</option>
-                        <option value="electronic">Electronic</option>
-                        <option value="classic">Classic</option>
-                        <option value="jazz">Jazz</option>
-                    </select>
-                </form>
-                <% if (session.getAttribute("genre") == null) { %>
-                <iframe class="center" width="100%" height="80%" src="https://www.youtube.com/embed/p5RobDomh5U?list=PL55713C70BA91BD6E" frameborder="1" allowfullscreen></iframe>
-                    <% } else if (session.getAttribute("genre").equals("rock")) { %>
-                <iframe class="center" width="100%" height="80%" src="https://www.youtube.com/embed/pXRviuL6vMY?list=PLRZlMhcYkA2HybvsMzUcsqoxqlCEHXnpC" frameborder="1" allowfullscreen></iframe>
-                    <% } else if (session.getAttribute("genre").equals("rnb")) { %>
-                <iframe class="center" width="100%" height="80%" src="https://www.youtube.com/embed/p5RobDomh5U?list=PL55713C70BA91BD6E" frameborder="1" allowfullscreen></iframe>
-                    <% }%>
+                <select class="form-control" id="genre" onchange="changeGenre()">
+                    <option value="default">Top 100</option>
+                    <option value="rock">Rock</option>
+                    <option value="rnb">R&AMP;B</option>
+                    <option value="pop">Pop</option>
+                    <option value="rap">Rap</option>
+                    <option value="electronic">Electronic</option>
+                    <option value="classic">Classic</option>
+                    <option value="jazz">Jazz</option>
+                </select>
+                <iframe id="youtube" class="center" width="100%" height="80%" src="https://www.youtube.com/embed/p5RobDomh5U?list=PL55713C70BA91BD6E" frameborder="1" allowfullscreen></iframe>
             </div>
         </div>
 

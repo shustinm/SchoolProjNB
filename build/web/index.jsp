@@ -7,6 +7,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/cover.css">
+        <%
+            if (application.getAttribute("counter") == null) {
+                    application.setAttribute("counter", 0);
+                }
+                application.setAttribute("counter", Integer.parseInt(application.getAttribute("counter").toString())+ 1);
+        %>
     </head>
     <body>
         <nav class="navbar navbar-default navbar-fixed-top">
@@ -50,7 +56,11 @@
                         <%
                             }
                         %>
+                        <br>
                     </p>
+                    <marquee style="color:#333;"> Visitors:
+                        <% out.print(application.getAttribute("counter"));%>
+                    </marquee>
                 </div>
             </div>
         </div>
