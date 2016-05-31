@@ -18,7 +18,7 @@
                             <% if (session.getAttribute("username") == null) { %>
                         <li class="active"><a href="SignUp.jsp">Sign Up</a></li>
                             <% } else {
-                                //response.sendRedirect("profile.jsp"); 
+                                response.sendRedirect("listen.jsp"); 
                             %>
                         <li class="active"><a href="SignUp.jsp"><%out.print(session.getAttribute("username"));%></a></li>
                             <% }
@@ -27,16 +27,18 @@
                             <% } else { %>
                         <li><a href="listen.jsp">Listen</a></li>
                             <% }%>
+                            <% if (session.getAttribute("username") != null) { %>
+                        <li><a href="logout.jsp">Log out</a>
+                            <% }%>
                     </ul>
                 </div>
             </div>
         </nav>
-
         <div class="a">
             <h1>Registration</h1>
             <h2>Enter your details below</h2>
             <h3>General Info:</h3>
-            <form autocomplete="off" onsubmit="return checkRegistFerForm()" name="reg" action="insertToDB.jsp" method="post">
+            <form autocomplete="off" onsubmit="return checkRegisterForm()" name="reg" action="insertToDB.jsp" method="POST">
                 <div class="form-group">
                     <input align="center" type="text" class="form-control" name="username" placeholder="Username" maxlength="16" required>
                 </div>

@@ -27,6 +27,9 @@
                         <li><a href="index.jsp">Home</a></li>
                         <li><a href="SignUp.jsp">Sign Up</a></li>
                         <li class="active"><a href="login.jsp">Login</a></li>
+                            <% if (session.getAttribute("username") != null) { %>
+                        <li><a href="logout.jsp">Log out</a>
+                            <% } %>
                     </ul>
                 </div>
             </div>
@@ -47,6 +50,7 @@
                     <button type="reset" class="btn btn-default">Reset</button>
                 </div>
             </form>
+            <a href = "adminLogin.jsp" class="btn btn-sm btn-info">I'm an admin</a>
         </div>
 
         <%

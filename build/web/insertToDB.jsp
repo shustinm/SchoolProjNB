@@ -36,6 +36,9 @@
                             <% } else { %>
                         <li><a href="listen.jsp">Listen</a></li>
                             <% }%>
+                            <% if (session.getAttribute("username") != null) { %>
+                        <li><a href="logout.jsp">Log out</a>
+                            <% } %>
                     </ul>
                 </div>
             </div>
@@ -94,13 +97,12 @@
                             out.print("<h1>Registration successful</h1><br>");
                             out.print("<h2>Your username is " + username + "</h2><br>");
                             out.print("<a href = \"listen.jsp\" class=\"btn btn-lg btn-default\">Listen</a>");
+                            session.setAttribute("username", username);
                         }
 
                         //end db connection
                         stmt.close();
                         con.close();
-                        
-                        session.setAttribute("username", username);
                     %>
                 </div>
             </div>

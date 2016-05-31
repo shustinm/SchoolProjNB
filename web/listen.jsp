@@ -1,11 +1,4 @@
 
-<%@page import="java.util.Base64"%>
-<%@page import="MyClasses.MyUtils"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Statement"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="java.util.Base64.*"%>
-
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -13,9 +6,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/cover.css">
         <script src="js/validation.js"></script>
-        <title>Login</title>
+        <title>Listen</title>
     </head>
     <body>
         <nav class="navbar navbar-default navbar-fixed-top">
@@ -35,6 +28,9 @@
                             <% } else { %>
                         <li class="active"><a href="listen.jsp">Listen</a></li>
                             <% }%>
+                            <% if (session.getAttribute("username") != null) { %>
+                        <li><a href="logout.jsp">Log out</a>
+                            <% } %>
                     </ul>
                 </div>
             </div>
@@ -42,14 +38,32 @@
 
         <% if (session.getAttribute("username") == null) {%>
         <div class="a">
-            <h1>Error</h1>
-            <h2>You need to log in to listen to music :(</h2>
+            <h2>Please log in!</h2>
         </div>
-        <% } else { %>
-        <div class="a">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/u9Dg-g7t2l4?list=PLhd1HyMTk3f5yqcPXjLo8qroWJiMMFBSk" frameborder="0" allowfullscreen></iframe>
+        <% } else %>
+        <div class="listen-wrapper b">
+            <div class="center">
+                <form name="reg" action="changePlaylist.jsp" method="POST">
+                    <select class="form-control" id="genre" onchange="this.form.submit()">
+                        <option>Select Genre</option>
+                        <option value="rock">Rock</option>
+                        <option value="rnb">R&AMP;B</option>
+                        <option value="pop">Pop</option>
+                        <option value="rap">Rap</option>
+                        <option value="electronic">Electronic</option>
+                        <option value="classic">Classic</option>
+                        <option value="jazz">Jazz</option>
+                    </select>
+                </form>
+                <% if (session.getAttribute("genre") == null) { %>
+                <iframe class="center" width="100%" height="80%" src="https://www.youtube.com/embed/p5RobDomh5U?list=PL55713C70BA91BD6E" frameborder="1" allowfullscreen></iframe>
+                    <% } else if (session.getAttribute("genre").equals("rock")) { %>
+                <iframe class="center" width="100%" height="80%" src="https://www.youtube.com/embed/pXRviuL6vMY?list=PLRZlMhcYkA2HybvsMzUcsqoxqlCEHXnpC" frameborder="1" allowfullscreen></iframe>
+                    <% } else if (session.getAttribute("genre").equals("rnb")) { %>
+                <iframe class="center" width="100%" height="80%" src="https://www.youtube.com/embed/p5RobDomh5U?list=PL55713C70BA91BD6E" frameborder="1" allowfullscreen></iframe>
+                    <% }%>
+            </div>
         </div>
-        <% }%>
 
 
 

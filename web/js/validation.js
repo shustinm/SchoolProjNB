@@ -10,6 +10,12 @@ function checkRegisterForm() {
     if (!validGender()) {
         return false;
     }
+    
+    if(!validAge()) {
+        document.reg.age.focus();
+        document.reg.age.select();
+        return false;
+    }
 
     if (!validEmail()) {
         document.reg.email.focus();
@@ -89,6 +95,15 @@ function validEmail() {
         return false;
     }
     return matchingMails();
+}
+
+function validAge(){
+    
+    if (document.reg.age.value<=0){
+        alert("Invalid age!");
+        return false;
+    }
+    return true;
 }
 
 function checkLoginForm() {

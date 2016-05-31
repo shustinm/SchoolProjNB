@@ -26,6 +26,9 @@
                             <% } else { %>
                         <li><a href="listen.jsp">Listen</a></li>
                             <% } %>
+                            <% if (session.getAttribute("username") != null) { %>
+                        <li><a href="logout.jsp">Log out</a>
+                            <% } %>
                     </ul>
                 </div>
             </div>
